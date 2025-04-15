@@ -5,6 +5,10 @@ export class Grid {
 	public numberOfColumns: number;
 	public grid: Cell[][] = [];
 
+	static on(_grid: Grid) {
+		throw new Error("Method not implemented.");
+	}
+
 	constructor(rows: number, columns: number) {
 		if (rows === undefined || columns === undefined) {
 			throw new Error("Rows and columns must be defined");
@@ -120,6 +124,20 @@ export class Grid {
 	public getBackgroundColorForCell(cell: Cell): string | undefined {
 		// return "rgb(255, 255, 255)";
 		return undefined;
+	}
+
+	/**
+	 * Lists all cells in the grid that are dead ends.
+	 * @returns An array of cells that are dead ends in the maze.
+	 */
+	public getDeadEnds(): Cell[] {
+		const list: Cell[] = [];
+		for (const cell of this.forEachCell()) {
+			if (cell.getLinks().length === 1) {
+				list.push(cell);
+			}
+		}
+		return list;
 	}
 
 	public toString() {
